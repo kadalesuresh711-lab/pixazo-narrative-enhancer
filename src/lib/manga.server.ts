@@ -1631,18 +1631,20 @@ const STYLE_LEAD =
  * being used for.
  */
 const STYLE_TAIL =
-  "bold shonen manga art, clean black ink linework, halftone screentone shading, " +
-  "saturated colours, dramatic lighting, detailed background, consistent art style";
+  "comic panel style, bold inked comic art, clean black comic linework, halftone ben-day shading, " +
+  "saturated comic-print colours, dramatic lighting, detailed background, consistent comic panel style";
 
 /**
- * Anti-collage guard. Flux reads the word "manga" as permission to draw a
- * whole comic PAGE. Flux has no negative channel, so this is phrased as a
- * POSITIVE description of the wanted frame: naming "panel borders", "speech
- * bubbles" or "collage" — even to forbid them — puts those very tokens into
- * the picture, which is what kept producing comic pages with balloons.
+ * Single-panel guard. The look is now explicitly a comic PANEL, so this states
+ * positively that there is exactly ONE panel filling the image — otherwise Flux
+ * reads "comic panel" as permission to draw a whole multi-panel page. Flux has
+ * no negative channel, so everything here describes the wanted result: naming
+ * "speech bubbles" or "collage" — even to forbid them — puts those very tokens
+ * into the picture, which is what kept producing pages with balloons.
  */
 const SINGLE_FRAME_GUARD =
-  "one seamless uninterrupted illustration, edge-to-edge artwork, clean picture free of lettering";
+  "exactly one comic panel filling the whole image, one continuous scene inside a single rectangular " +
+  "black panel border, smooth clean artwork surface";
 
 
 
