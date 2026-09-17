@@ -16,11 +16,12 @@ const IMAGE_REQUEST_TIMEOUT_MS = 1_800_000;
  * unwanted media such as photography or pencil sketches can make Flux draw them.
  */
 export const STYLE =
-  "FIXED VISUAL STYLE: vivid full-colour shonen fighting manga artwork of a magical fantasy world, heavy bold black ink linework " +
-  "with dramatic hatching, screentone and halftone comic shading, deep cross-hatched shadows, explosive glowing energy and aura effects, " +
-  "motion speed lines on attacks, expressive manga facial design, consistent character proportions, " +
-  "intensely saturated jewel-tone colours with glowing magical light, dramatic comic-panel composition, " +
-  "richly detailed fantastical backgrounds, sharp finished colour-manga illustration";
+  "FIXED VISUAL STYLE: one single full-colour comic book panel, printed comic panel artwork inside one clean rectangular " +
+  "panel frame with a bold black border, heavy inked comic linework with dramatic hatching, ben-day dot and halftone " +
+  "comic shading, deep cross-hatched shadows, explosive glowing energy and aura effects, comic motion speed lines on " +
+  "action, expressive comic character faces, consistent character proportions, intensely saturated comic-print colours " +
+  "with glowing light, dynamic comic panel composition and camera angle, richly detailed painted background inside the " +
+  "panel, sharp finished comic panel illustration";
 
 /**
  * The single authoritative light statement for every panel: natural, faithful
