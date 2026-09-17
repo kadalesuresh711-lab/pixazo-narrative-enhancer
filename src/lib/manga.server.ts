@@ -1747,7 +1747,7 @@ export function composeImagePrompt(
   const scenedText = peopled
     ? fixed
         .replace(
-          /,?\s*\b(?:with\s+|and\s+)?no (?:people|figures?|characters?|humans?)\b[^.,;]*/gi,
+          /,?\s*\b(?:with\s+|and\s+)?no (?:people|figures?|characters?|humans?)\b[^.,;:]*/gi,
           "",
         )
         .replace(/,?\s*\bunpopulated\b/gi, "")
