@@ -16,11 +16,12 @@ const IMAGE_REQUEST_TIMEOUT_MS = 1_800_000;
  * unwanted media such as photography or pencil sketches can make Flux draw them.
  */
 export const STYLE =
-  "FIXED VISUAL STYLE: vivid full-colour shonen fighting manga artwork of a magical fantasy world, heavy bold black ink linework " +
-  "with dramatic hatching, screentone and halftone comic shading, deep cross-hatched shadows, explosive glowing energy and aura effects, " +
-  "motion speed lines on attacks, expressive manga facial design, consistent character proportions, " +
-  "intensely saturated jewel-tone colours with glowing magical light, dramatic comic-panel composition, " +
-  "richly detailed fantastical backgrounds, sharp finished colour-manga illustration";
+  "FIXED VISUAL STYLE: one single full-colour comic book panel, printed comic panel artwork inside one clean rectangular " +
+  "panel frame with a bold black border, heavy inked comic linework with dramatic hatching, ben-day dot and halftone " +
+  "comic shading, deep cross-hatched shadows, explosive glowing energy and aura effects, comic motion speed lines on " +
+  "action, expressive comic character faces, consistent character proportions, intensely saturated comic-print colours " +
+  "with glowing light, dynamic comic panel composition and camera angle, richly detailed painted background inside the " +
+  "panel, sharp finished comic panel illustration";
 
 /**
  * The single authoritative light statement for every panel: natural, faithful
@@ -1616,7 +1617,7 @@ function clip(s: string, max: number): string {
  * without ever naming faces or eyes as things to draw.
  */
 const STYLE_LEAD =
-  "colour shonen manga illustration, one single full-bleed widescreen picture of";
+  "one single full-colour comic book panel showing";
 
 /**
  * The fixed look. This is appended AFTER the scene has been trimmed, never
@@ -1630,18 +1631,20 @@ const STYLE_LEAD =
  * being used for.
  */
 const STYLE_TAIL =
-  "bold shonen manga art, clean black ink linework, halftone screentone shading, " +
-  "saturated colours, dramatic lighting, detailed background, consistent art style";
+  "comic panel style, bold inked comic art, clean black comic linework, halftone ben-day shading, " +
+  "saturated comic-print colours, dramatic lighting, detailed background, consistent comic panel style";
 
 /**
- * Anti-collage guard. Flux reads the word "manga" as permission to draw a
- * whole comic PAGE. Flux has no negative channel, so this is phrased as a
- * POSITIVE description of the wanted frame: naming "panel borders", "speech
- * bubbles" or "collage" — even to forbid them — puts those very tokens into
- * the picture, which is what kept producing comic pages with balloons.
+ * Single-panel guard. The look is now explicitly a comic PANEL, so this states
+ * positively that there is exactly ONE panel filling the image — otherwise Flux
+ * reads "comic panel" as permission to draw a whole multi-panel page. Flux has
+ * no negative channel, so everything here describes the wanted result: naming
+ * "speech bubbles" or "collage" — even to forbid them — puts those very tokens
+ * into the picture, which is what kept producing pages with balloons.
  */
 const SINGLE_FRAME_GUARD =
-  "one seamless uninterrupted illustration, edge-to-edge artwork, clean picture free of lettering";
+  "exactly one comic panel filling the whole image, one continuous scene inside a single rectangular " +
+  "black panel border, smooth clean artwork surface";
 
 
 
