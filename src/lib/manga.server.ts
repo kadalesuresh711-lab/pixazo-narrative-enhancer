@@ -1617,7 +1617,7 @@ function clip(s: string, max: number): string {
  * without ever naming faces or eyes as things to draw.
  */
 const STYLE_LEAD =
-  "colour shonen manga illustration, one single full-bleed widescreen picture of";
+  "one single full-colour comic book panel showing";
 
 /**
  * The fixed look. This is appended AFTER the scene has been trimmed, never
