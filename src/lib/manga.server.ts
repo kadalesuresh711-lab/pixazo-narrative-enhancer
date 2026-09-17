@@ -1751,9 +1751,22 @@ export function composeImagePrompt(
           "",
         )
         .replace(/,?\s*\bunpopulated\b/gi, "")
+        // The writing model sometimes opens a two-person beat with "Empty
+        // environment shot, no people:" — the phrase used to survive into the
+        // first, most influential words of the picture instruction.
+        .replace(
+          /^\s*(?:an?\s+)?empty\s+(?:environment|location|place|scene|street|room)\s*(?:shot|view)?\s*[:,-]?\s*/i,
+          "",
+        )
+        .replace(
+          /,?\s*\b(?:an?\s+)?empty\s+(?:environment|location)\s*(?:shot|view)?\b\s*[:,-]?/gi,
+          "",
+        )
+        .replace(/,?\s*\bscenery only\b/gi, "")
         .replace(/\s{2,}/g, " ")
         .replace(/\s+([,.])/g, "$1")
         .replace(/(,\s*){2,}/g, ", ")
+        .replace(/^[\s,.:;-]+/, "")
         .trim()
     : fixed;
   const beat = openingBeat(scenedText);
