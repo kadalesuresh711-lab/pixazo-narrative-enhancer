@@ -1741,7 +1741,22 @@ export function composeImagePrompt(
     bible,
   );
   const peopled = hasPeople(fixed, bible);
-  const beat = openingBeat(fixed);
+  // Flux has no negative channel, so an "no people / unpopulated" phrase left
+  // inside a PEOPLED scene both confused the cast decision above and drew extra
+  // bystanders. Once the scene is known to have people, the phrase is dropped.
+  const scenedText = peopled
+    ? fixed
+        .replace(
+          /,?\s*\b(?:with\s+|and\s+)?no (?:people|figures?|characters?|humans?)\b[^.,;]*/gi,
+          "",
+        )
+        .replace(/,?\s*\bunpopulated\b/gi, "")
+        .replace(/\s{2,}/g, " ")
+        .replace(/\s+([,.])/g, "$1")
+        .replace(/(,\s*){2,}/g, ", ")
+        .trim()
+    : fixed;
+  const beat = openingBeat(scenedText);
   const restText = clip(beat.rest, Math.max(120, SCENE_BUDGET - beat.lead.length));
   // Identity is judged against the text that ACTUALLY ships, not the untrimmed
   // one: a character whose clothing was trimmed off the scene used to be listed
