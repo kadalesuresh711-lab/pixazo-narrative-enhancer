@@ -1499,19 +1499,45 @@ export function ageOf(traits: string): string {
   return "";
 }
 
-/** True when the prompt describes at least one human in frame. */
+/**
+ * True when the prompt describes at least one human in frame.
+ *
+ * Order matters. A named cast member ALWAYS wins: the old version tested the
+ * "no people / empty environment" wording FIRST, so a two-person scene whose
+ * prompt happened to carry an empty-frame phrase anywhere in it (a leftover
+ * guard, "no people watching", "unpopulated street") was declared peopleless.
+ * The composer then dropped every character description and appended "empty
+ * location, scenery only" to a scene with two people in it — the single largest
+ * source of pictures showing the wrong thing.
+ *
+ * An empty-frame declaration is now only believed when nothing else in the
+ * prompt names a person: the phrases are removed before the human-noun scan so
+ * "no people" cannot count as the noun "people" in either direction.
+ */
 export function hasPeople(prompt: string, bible?: string): boolean {
   const p = prompt.toLowerCase();
-  if (/\bno (people|figures?|characters?|humans?)\b|\bempty environment\b|\bunpopulated\b/.test(p))
-    return false;
+
+  // 1. A character from the consistency sheet is named -> people are in frame.
   if (
     bible &&
     parseBible(bible).some((e) => new RegExp(`\\b${escapeRe(e.name)}\\b`, "i").test(prompt))
   )
     return true;
-  return /\b(man|men|woman|women|boy|boys|girl|girls|child|children|person|people|crowd|figure|silhouette|soldier|guard|villager|student|teacher|shopkeeper|worker|stranger|face|faces|he|she|they)\b/.test(
-    p,
-  );
+
+  const emptyPhrase =
+    /\bno (?:people|figures?|characters?|humans?)\b|\bempty environment\b|\bunpopulated\b|\bscenery only\b/g;
+  const withoutEmptyPhrases = p.replace(emptyPhrase, " ");
+
+  // 2. A human is described somewhere outside those phrases -> people in frame.
+  if (
+    /\b(man|men|woman|women|boy|boys|girl|girls|child|children|person|people|crowd|figure|silhouette|soldier|guard|villager|student|teacher|shopkeeper|worker|stranger|face|faces|he|she|they)\b/.test(
+      withoutEmptyPhrases,
+    )
+  )
+    return true;
+
+  // 3. Nothing but an empty-frame declaration -> a true scenery shot.
+  return false;
 }
 
 /**
